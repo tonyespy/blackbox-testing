@@ -2,8 +2,7 @@
 
 NAMESFILE=$(dirname "$0")/files.sh
 
-COLLECTION_PATH="collections/export-client.postman_collection.json"
-ENV_PATH="environment/export-client-docker.postman_environment.json"
+_TESTMODE=${_TESTMODE:docker}
 
 if [ -f $NAMESFILE ]; then 
 
@@ -17,18 +16,46 @@ fi
 
 echo "Info: Initiating Export-Client Test."
 
-echo "[info] ---------- use docker-compose run newman ----------"
+if [ "$_TESTMODE" == "docker" ] ; then
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="registration" --iteration-data="data/exportClientData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    COLLECTION_PATH="collections/export-client.postman_collection.json"
+    ENV_PATH="environment/export-client-docker.postman_environment.json"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="registration_error_4xx" --iteration-data="data/exportClientData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    echo "[info] ---------- use docker-compose run postman ----------"
     
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="ping" --iteration-data="data/exportClientData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="registration" --iteration-data="data/exportClientData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
+
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="registration_error_4xx" --iteration-data="data/exportClientData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
+
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="ping" --iteration-data="data/exportClientData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
+
+elif [ "$_TESTMODE" == "newman" ] ; then
+
+    echo "[info] ---------- use newman ----------"
+
+    COLLECTION_PATH="./postman-test/collections/export-client.postman_collection.json"
+    ENV_PATH="./postman-test/environment/export-client.postman_environment.json"
+
+    newman run ${COLLECTION_PATH} \
+	   --folder registration -e ${ENV_PATH} \
+	   -d ./postman-test/data/exportClientData.json \
+	   -r cli
+
+    newman run ${COLLECTION_PATH} \
+	   --folder registration_error_4xxx -e ${ENV_PATH} \
+	   -d ./postman-test/data/exportClientData.json \
+	   -r cli
+
+    newman run ${COLLECTION_PATH} \
+	   --folder ping -e -e ${ENV_PATH} \
+	   -d ./postman-test/data/exportClientData.json \
+	   -r cli
+fi
 
 echo "Info: Export-Client Test Completed."

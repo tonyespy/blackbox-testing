@@ -4,53 +4,55 @@ TIMESTAMPFORMAT=`date +%d-%m-%Y_%H%M%S`
 
 CONFIGFILE=$(dirname "$0")/config.sh
 
-EVENTDATAFILE=/etc/newman/data/eventData.json
-COREDATAENVFILE=/etc/newman/environment/CoredataEnv.postman_environment.json
-COREDATACOLLFILE=/etc/newman/collections/core-data.postman_collection.json
-EVENTDATADUMP=/etc/newman/DataDumps/coredata/eventDb.json
-READINGDATADUMP=/etc/newman/DataDumps/coredata/readingDb.json
-VDDATADUMP=/etc/newman/DataDumps/coredata/valueDescriptorDb.json
-READINGDATAFILE=/etc/newman/data/readingData.json
-VDDATAFILE=/etc/newman/data/valueDescriptorData.json
+_ROOTDIR=${_ROOTDIR:-/etc/newman}
 
-METADATA_ENVFILE=/etc/newman/environment/MetadataEnv.postman_environment.json
-METADATA_COLLFILE=/etc/newman/collections/core-metadata.postman_collection.json
-ADDRESSABLE_DATAFILE=/etc/newman/data/addressableData.json
-ADDRESSABLE_DATADUMP=/etc/newman/DataDumps/metadata/addressableDb.json
-DEVICE_DATAFILE=/etc/newman/data/deviceData.json
-DEVICE_DATADUMP=/etc/newman/DataDumps/metadata/deviceDb.json
-DEVICESERVICE_DATAFILE=/etc/newman/data/deviceServiceData.json
-DEVICESERVICE_DATADUMP=/etc/newman/DataDumps/metadata/deviceserviceDb.json
-COMMAND_DATAFILE=/etc/newman/data/commandData.json
-COMMAND_DATADUMP=/etc/newman/DataDumps/metadata/commandDb.json
-DEVICEMANAGER_DATAFILE=/etc/newman/data/deviceManagerData.json
-DEVICEMANAGER_DATADUMP=/etc/newman/DataDumps/metadata/deviceManagerDb.json
-DEVICEPROFILE_DATAFILE=/etc/newman/data/deviceProfileData.json
-DEVICEPROFILE_DATADUMP=/etc/newman/DataDumps/metadata/deviceProfileDb.json
-PROVISION_DATAFILE=/etc/newman/data/provisionWatcherData.json
-PROVISION_DATADUMP=/etc/newman/DataDumps/metadata/provisioWatcherDb.json
-DEVICEREPORT_DATAFILE=/etc/newman/data/deviceReportData.json
-DEVICEREPORT_DATADUMP=/etc/newman/DataDumps/metadata/deviceReportDb.json
-SCHEDULE_DATAFILE=/etc/newman/data/scheduleData.json
-SCHEDULE_DATADUMP=/etc/newman/DataDumps/metadata/scheduleDb.json
-SCHEDULEEVENT_DATAFILE=/etc/newman/data/scheduleEventData.json
-SCHEDULEEVENT_DATADUMP=/etc/newman/DataDumps/metadata/scheduleEventDb.json
+EVENTDATAFILE="$_ROOTDIR"/data/eventData.json
+COREDATAENVFILE="$_ROOTDIR"/environment/CoredataEnv.postman_environment.json
+COREDATACOLLFILE="$_ROOTDIR"/collections/core-data.postman_collection.json
+EVENTDATADUMP="$_ROOTDIR"/DataDumps/coredata/eventDb.json
+READINGDATADUMP="$_ROOTDIR"/DataDumps/coredata/readingDb.json
+VDDATADUMP="$_ROOTDIR"/DataDumps/coredata/valueDescriptorDb.json
+READINGDATAFILE="$_ROOTDIR"/data/readingData.json
+VDDATAFILE="$_ROOTDIR"/data/valueDescriptorData.json
 
-CORECOMMANDENVFILE=/etc/newman/environment/command.postman_environment.json
-CORECOMMANDCOLLFILE=/etc/newman/collections/core-command.postman_collection.json
-ADDRESSABLECCDATADUMP=/etc/newman/DataDumps/command/addressableDb.json
-DEVICECCDATADUMP=/etc/newman/DataDumps/command/deviceDb.json
-DEVICEPROFILECCDATADUMP=/etc/newman/DataDumps/command/deviceProfileDb.json
-DEVICESERVICECCDATADUMP=/etc/newman/DataDumps/command/deviceServiceDb.json
-COMMANDCCDATADUMP=/etc/newman/DataDumps/command/commandDb.json
-CORECOMMANDDATAFILE=/etc/newman/data/coreCommandData.json
+METADATA_ENVFILE="$_ROOTDIR"/environment/MetadataEnv.postman_environment.json
+METADATA_COLLFILE="$_ROOTDIR"/collections/core-metadata.postman_collection.json
+ADDRESSABLE_DATAFILE="$_ROOTDIR"/data/addressableData.json
+ADDRESSABLE_DATADUMP="$_ROOTDIR"/DataDumps/metadata/addressableDb.json
+DEVICE_DATAFILE="$_ROOTDIR"/data/deviceData.json
+DEVICE_DATADUMP="$_ROOTDIR"/DataDumps/metadata/deviceDb.json
+DEVICESERVICE_DATAFILE="$_ROOTDIR"/data/deviceServiceData.json
+DEVICESERVICE_DATADUMP="$_ROOTDIR"/DataDumps/metadata/deviceserviceDb.json
+COMMAND_DATAFILE="$_ROOTDIR"/data/commandData.json
+COMMAND_DATADUMP="$_ROOTDIR"/DataDumps/metadata/commandDb.json
+DEVICEMANAGER_DATAFILE="$_ROOTDIR"/data/deviceManagerData.json
+DEVICEMANAGER_DATADUMP="$_ROOTDIR"/DataDumps/metadata/deviceManagerDb.json
+DEVICEPROFILE_DATAFILE="$_ROOTDIR"/data/deviceProfileData.json
+DEVICEPROFILE_DATADUMP="$_ROOTDIR"/DataDumps/metadata/deviceProfileDb.json
+PROVISION_DATAFILE="$_ROOTDIR"/data/provisionWatcherData.json
+PROVISION_DATADUMP="$_ROOTDIR"/DataDumps/metadata/provisioWatcherDb.json
+DEVICEREPORT_DATAFILE="$_ROOTDIR"/data/deviceReportData.json
+DEVICEREPORT_DATADUMP="$_ROOTDIR"/DataDumps/metadata/deviceReportDb.json
+SCHEDULE_DATAFILE="$_ROOTDIR"/data/scheduleData.json
+SCHEDULE_DATADUMP="$_ROOTDIR"/DataDumps/metadata/scheduleDb.json
+SCHEDULEEVENT_DATAFILE="$_ROOTDIR"/data/scheduleEventData.json
+SCHEDULEEVENT_DATADUMP="$_ROOTDIR"/DataDumps/metadata/scheduleEventDb.json
 
-REGISTERDATADUMP=/etc/newman/DataDumps/exportclient/exportConfigurationDb.json
-LOGGINGDATADUMP=/etc/newman/DataDumps/logging/logEntryDb.json
+CORECOMMANDENVFILE="$_ROOTDIR"/environment/command.postman_environment.json
+CORECOMMANDCOLLFILE="$_ROOTDIR"/collections/core-command.postman_collection.json
+ADDRESSABLECCDATADUMP="$_ROOTDIR"/DataDumps/command/addressableDb.json
+DEVICECCDATADUMP="$_ROOTDIR"/DataDumps/command/deviceDb.json
+DEVICEPROFILECCDATADUMP="$_ROOTDIR"/DataDumps/command/deviceProfileDb.json
+DEVICESERVICECCDATADUMP="$_ROOTDIR"/DataDumps/command/deviceServiceDb.json
+COMMANDCCDATADUMP="$_ROOTDIR"/DataDumps/command/commandDb.json
+CORECOMMANDDATAFILE="$_ROOTDIR"/data/coreCommandData.json
 
-SUPPORTNOTIFICATION_NOTIFICATION_DATADUMP=/etc/newman/DataDumps/supportNotifications/notificationDb.json
-SUPPORTNOTIFICATION_SUBSCRIPTION_DATADUMP=/etc/newman/DataDumps/supportNotifications/subscriptionDb.json
-SUPPORTNOTIFICATION_TRANSMISSION_DATADUMP=/etc/newman/DataDumps/supportNotifications/transmissionDb.json
+REGISTERDATADUMP="$_ROOTDIR"/DataDumps/exportclient/exportConfigurationDb.json
+LOGGINGDATADUMP="$_ROOTDIR"/DataDumps/logging/logEntryDb.json
+
+SUPPORTNOTIFICATION_NOTIFICATION_DATADUMP="$_ROOTDIR"/DataDumps/supportNotifications/notificationDb.json
+SUPPORTNOTIFICATION_SUBSCRIPTION_DATADUMP="$_ROOTDIR"/DataDumps/supportNotifications/subscriptionDb.json
+SUPPORTNOTIFICATION_TRANSMISSION_DATADUMP="$_ROOTDIR"/DataDumps/supportNotifications/transmissionDb.json
 
 if [ -f $CONFIGFILE ]; then
 

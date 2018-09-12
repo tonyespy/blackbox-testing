@@ -2,6 +2,14 @@
 
 DATA_BASE="notifications"
 
-FLUSH_SCRIPT=/etc/newman/javascript/supportNotifications/flushScript.js
+if [ "$SNAPTEST" == "true" ] ; then
+    FLUSH_SCRIPT=postman-test/javascript/supportNotifications/flushScript.js
 
-docker-compose exec -T mongo /bin/bash -c "mongo ${DATA_BASE} ${FLUSH_SCRIPT}"
+    COMMAND="edgexfoundry.mongo"
+else
+    FLUSH_SCRIPT=/etc/newman/javascript/supportNotifications/flushScript.js
+
+    COMMAND="docker-compose exec -T mongo /bin/bash -c mongo"
+fi
+
+${COMMAND} ${DATA_BASE} ${FLUSH_SCRIPT}

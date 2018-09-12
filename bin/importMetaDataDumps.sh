@@ -22,9 +22,15 @@ DUMP_FILES=(
     $COMMAND_DATADUMP $DEVICEPROFILE_DATADUMP $PROVISION_DATADUMP
     $DEVICEREPORT_DATADUMP $SCHEDULE_DATADUMP $SCHEDULEEVENT_DATADUMP )
 
+if [ "$SNAPTEST" == "true" ] ; then
+    COMMAND="edgexfoundry.mongoimport"
+else
+    COMMAND="docker-compose exec -T mongo /bin/bash -c mongoimport"
+fi
+
 for index in "${!DUMP_FILES[@]}"
 do
-    docker-compose exec -T mongo /bin/bash -c "mongoimport -d ${DATA_BASE} -c ${COLLECTIONS[index]} --file ${DUMP_FILES[index]}"
+    ${COMMAND} -d ${DATA_BASE} -c ${COLLECTIONS[index]} --file ${DUMP_FILES[index]}
 
     echo "Info: ${DUMP_FILES[index]} data imported"
 done

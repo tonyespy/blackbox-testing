@@ -2,8 +2,8 @@
 
 NAMESFILE=$(dirname "$0")/files.sh
 
-COLLECTION_PATH="collections/core-command.postman_collection.json"
-ENV_PATH="environment/command.postman_environment.json"
+
+_TESTMODE=${_TESTMODE:docker}
 
 if [ -f $NAMESFILE ]; then 
 
@@ -17,15 +17,38 @@ fi
 
 echo "Info: Initiating Command Test."
 
-echo "[info] ---------- use docker-compose run newman ----------"
+if [ "$_TESTMODE" == "docker" ] ; then
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="device" --iteration-data="data/coreCommandData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    COLLECTION_PATH="collections/core-command.postman_collection.json"
+    ENV_PATH="environment/command.postman_environment.json"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="device_error_4xx" --iteration-data="data/coreCommandData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    echo "[info] ---------- use docker-compose run postman ----------"
+
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="device" --iteration-data="data/coreCommandData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
+
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="device_error_4xx" --iteration-data="data/coreCommandData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
+
+elif [ "$_TESTMODE" == "newman" ] ; then
+
+    COLLECTION_PATH="./postman-test/collections/core-command.postman_collection.json"
+    ENV_PATH="./postman-test/environment/command.postman_environment.json"
+
+    echo "[info] ---------- use newman ----------"
+
+    newman run ${COLLECTION_PATH} \
+	   --folder device -e ${ENV_PATH} \
+	   -d ./postman-test/data/coreCommandData.json \
+	   -r cli
+
+    newman run ${COLLECTION_PATH} \
+	   --folder device_error_4xx -e ${ENV_PATH} \
+	   -d ./postman-test/data/coreCommandData.json \
+	   -r cli
+fi
 
 #docker run --rm -v ~/${TEST_DIR}/postman-test/:/etc/newman --network=${DOCKER_NETWORK} postman/newman_ubuntu1404 run "${COLLECTION_PATH}" \
 #    --folder="device" --iteration-data="data/coreCommandData.json" --environment="${ENV_PATH}" \

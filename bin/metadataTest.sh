@@ -2,8 +2,7 @@
 
 NAMESFILE=$(dirname "$0")/files.sh
 
-COLLECTION_PATH="collections/core-metadata.postman_collection.json"
-ENV_PATH="environment/MetadataEnv.postman_environment.json"
+_TESTMODE=${_TESTMODE:docker}
 
 if [ -f $NAMESFILE ]; then 
 
@@ -17,97 +16,208 @@ fi
 
 echo "Info: Initiating Metadata Test."
 
-echo "[info] ---------- use docker-compose run newman ----------"
+if [ "$_TESTMODE" == "docker" ] ; then
 
-echo "[info] ======================== Start run metaData test - addressable ========================"
+    COLLECTION_PATH="collections/core-metadata.postman_collection.json"
+    ENV_PATH="environment/MetadataEnv.postman_environment.json"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="addressable" --iteration-data="data/addressableData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
-    
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="addressable_error_4xx" --iteration-data="data/addressableData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"    
+    echo "[info] ---------- use docker-compose run postman ----------"
 
-echo "[info] ======================== Start run metaData test - command ========================"
+    echo "[info] ======================== Start run metaData test - addressable ========================"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="command" --iteration-data="data/commandData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"  
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="addressable" --iteration-data="data/addressableData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="command_error_4xx" --iteration-data="data/commandData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"  
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="addressable_error_4xx" --iteration-data="data/addressableData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
 
-echo "[info] ======================== Start run metaData test - device ========================"
+    echo "[info] ======================== Start run metaData test - command ========================"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="device" --iteration-data="data/deviceData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="command" --iteration-data="data/commandData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="device_error_4xx" --iteration-data="data/deviceData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="command_error_4xx" --iteration-data="data/commandData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
 
-echo "[info] ======================== Start run metaData test - deviceprofile ========================"
+    echo "[info] ======================== Start run metaData test - device ========================"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="deviceprofile" --iteration-data="data/deviceProfileData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="device" --iteration-data="data/deviceData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="deviceprofile_error_4xx" --iteration-data="data/deviceProfileData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="device_error_4xx" --iteration-data="data/deviceData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
 
-echo "[info] ======================== Start run metaData test - devicereport ========================"
+    echo "[info] ======================== Start run metaData test - deviceprofile ========================"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="devicereport" --iteration-data="data/deviceReportData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="deviceprofile" --iteration-data="data/deviceProfileData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="devicereport_error_4xx" --iteration-data="data/deviceReportData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="deviceprofile_error_4xx" --iteration-data="data/deviceProfileData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
 
-echo "[info] ======================== Start run metaData test - deviceservice ========================"
+    echo "[info] ======================== Start run metaData test - devicereport ========================"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="deviceservice" --iteration-data="data/deviceServiceData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="devicereport" --iteration-data="data/deviceReportData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="deviceservice_error_4xx" --iteration-data="data/deviceServiceData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="devicereport_error_4xx" --iteration-data="data/deviceReportData.json" --environment=${ENV_PATH} \
+       --reporters="junit,cli"
 
-echo "[info] ======================== Start run metaData test - provisionwatcher ========================"
+    echo "[info] ======================== Start run metaData test - deviceservice ========================"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="provisionwatcher" --iteration-data="data/provisionWatcherData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="deviceservice" --iteration-data="data/deviceServiceData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="provisionwatcher_error_4xx" --iteration-data="data/provisionWatcherData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="deviceservice_error_4xx" --iteration-data="data/deviceServiceData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
 
-echo "[info] ======================== Start run metaData test - schedule ========================"
+    echo "[info] ======================== Start run metaData test - provisionwatcher ========================"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="schedule" --iteration-data="data/scheduleData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="provisionwatcher" --iteration-data="data/provisionWatcherData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="schedule_error_4xx" --iteration-data="data/scheduleData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="provisionwatcher_error_4xx" --iteration-data="data/provisionWatcherData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
 
-echo "[info] ======================== Start run metaData test - scheduleevent ========================"
+    echo "[info] ======================== Start run metaData test - schedule ========================"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="scheduleevent" --iteration-data="data/scheduleEventData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="schedule" --iteration-data="data/scheduleData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
 
-docker-compose run --rm postman run ${COLLECTION_PATH} \
-    --folder="scheduleevent_error_4xx" --iteration-data="data/scheduleEventData.json" --environment=${ENV_PATH} \
-    --reporters="junit,cli"
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="schedule_error_4xx" --iteration-data="data/scheduleData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
+
+    echo "[info] ======================== Start run metaData test - scheduleevent ========================"
+
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="scheduleevent" --iteration-data="data/scheduleEventData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
+
+    docker-compose run --rm postman run ${COLLECTION_PATH} \
+        --folder="scheduleevent_error_4xx" --iteration-data="data/scheduleEventData.json" --environment=${ENV_PATH} \
+        --reporters="junit,cli"
+
+elif [ "$_TESTMODE" == "newman" ] ; then
+
+    COLLECTION_PATH="./postman-test/collections/core-metadata.postman_collection.json"
+    ENV_PATH="./postman-test/environment/MetadataEnv.postman_environment.json"
+
+    echo "[info] ---------- use newman ----------"
+
+    newman run ${COLLECTION_PATH} \
+	   --folder addressable -e ${ENV_PATH} \
+	   -d ./postman-test/data/addressableData.json \
+	   -r cli
+
+    newman run ${COLLECTION_PATH} \
+	   --folder addressable_error_4xx -e ${ENV_PATH} \
+	   -d ./postman-test/data/addressableData.json \
+	   -r cli
+
+    echo "[info] ======================== Start run metaData test - command ========================"
+    newman run ${COLLECTION_PATH} \
+	   --folder command -e ${ENV_PATH} \
+	   -d ./postman-test/data/commandData.json \
+	   -r cli
+
+    newman run ${COLLECTION_PATH} \
+	   --folder command_error_4xx -e ${ENV_PATH} \
+	   -d ./postman-test/data/commandData.json \
+	   -r cli
+
+    echo "[info] ======================== Start run metaData test - device ========================"
+    newman run ${COLLECTION_PATH} \
+	   --folder device -e ${ENV_PATH} \
+	   -d ./postman-test/data/deviceData.json \
+	   -r cli
+
+    newman run ${COLLECTION_PATH} \
+	   --folder device_error_4xx -e ${ENV_PATH} \
+	   -d ./postman-test/data/deviceData.json \
+	   -r cli
+
+    echo "[info] ======================== Start run metaData test - deviceprofile ========================"
+    newman run ${COLLECTION_PATH} \
+	   --folder deviceprofile -e ${ENV_PATH} \
+	   -d ./postman-test/data/deviceProfileData.json \
+	   -r cli
+
+    newman run ${COLLECTION_PATH} \
+	   --folder deviceprofile_error_4xx -e ${ENV_PATH} \
+	   -d ./postman-test/data/deviceProfileData.json \
+	   -r cli
+
+    echo "[info] ======================== Start run metaData test - devicereport ========================"
+    newman run ${COLLECTION_PATH} \
+	   --folder devicereport -e ${ENV_PATH} \
+	   -d ./postman-test/data/deviceReportData.json \
+	   -r cli
+
+    newman run ${COLLECTION_PATH} \
+	   --folder devicereport_error_4xx -e ${ENV_PATH} \
+	   -d ./postman-test/data/deviceReportData.json \
+	   -r cli
+
+    echo "[info] ======================== Start run metaData test - deviceservice ========================"
+    newman run ${COLLECTION_PATH} \
+	   --folder deviceservice -e ${ENV_PATH} \
+	   -d ./postman-test/data/deviceServiceData.json \
+	   -r cli
+
+    newman run ${COLLECTION_PATH} \
+	   --folder deviceservice_error_4xx -e ${ENV_PATH} \
+	   -d ./postman-test/data/deviceServiceData.json \
+	   -r cli
+
+    echo "[info] ======================== Start run metaData test - provisionwatcher ========================"
+    newman run ${COLLECTION_PATH} \
+	   --folder provisionwatcher -e ${ENV_PATH} \
+	   -d ./postman-test/data/provisionWatcherData.json \
+	   -r cli
+
+    newman run ${COLLECTION_PATH} \
+	   --folder provisionwatcher_error_4xx -e ${ENV_PATH} \
+	   -d ./postman-test/data/provisionWatcherData.json \
+	   -r cli
+
+    echo "[info] ======================== Start run metaData test - schedule ========================"
+    newman run ${COLLECTION_PATH} \
+	   --folder schedule -e ${ENV_PATH} \
+	   -d ./postman-test/data/scheduleData.json \
+	   -r cli
+
+    newman run ${COLLECTION_PATH} \
+	   --folder schedule_error_4xx -e ${ENV_PATH} \
+	   -d ./postman-test/data/scheduleData.json \
+	   -r cli
+
+    echo "[info] ======================== Start run metaData test - scheduleevent ========================"
+    newman run ${COLLECTION_PATH} \
+	   --folder scheduleevent -e ${ENV_PATH} \
+	   -d ./postman-test/data/scheduleEventData.json \
+	   -r cli
+
+    newman run ${COLLECTION_PATH} \
+	   --folder scheduleevent_error_4xx -e ${ENV_PATH} \
+	   -d ./postman-test/data/scheduleEventData.json \
+	   -r cli
+fi
 
 
 
