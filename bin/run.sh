@@ -57,7 +57,7 @@ metaDataTest() {
 		source $(dirname "$0")/security/flushMetaDataDump.sh
 	else
     sh $(dirname "$0")/importMetaDataDumps.sh
-    sh $(dirname "$0")/metadataTest.sh
+    sh $(dirname "$0")/snapMetadataTest.sh
     sh $(dirname "$0")/flushMetaDataDump.sh
 	fi
 }
